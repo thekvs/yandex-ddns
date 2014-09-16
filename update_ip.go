@@ -33,9 +33,9 @@ func verifyUpdateRecordResponse(data []byte) {
 func getFullDomainName(subdomain string, domain string) string {
 	if subdomain == "@" {
 		return domain
-	} else {
-		return fmt.Sprintf("%s.%s", subdomain, domain)
 	}
+
+	return fmt.Sprintf("%s.%s", subdomain, domain)
 }
 
 func updateDomainAddress(info *domainInfo, extIPAddr *externalIPAddress, conf *config) {
