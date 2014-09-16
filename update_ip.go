@@ -3,9 +3,7 @@ package main
 import (
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"net/http"
 	"strconv"
 )
 
@@ -52,17 +50,7 @@ func updateDomainAddress(info *domainInfo, extIPAddr *externalIPAddress, conf *c
 	)
 
 	update := func() {
-		resp, err := http.Get(url)
-		if err != nil {
-			log.Fatalf("request to the Yandex DNS API service failed: %v\n", err)
-		}
-		defer resp.Body.Close()
-
-		body, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			log.Fatalf("request to the Yandex DNS API service failed: %v\n", err)
-		}
-
+		body := getURL(url)
 		verifyUpdateRecordResponse(body)
 
 		log.Printf("IP address for '%s' set to %s\n", getFullDomainName(subDomain, conf.Domain), addr)

@@ -1,11 +1,8 @@
 package main
 
 import (
-	//"fmt"
-	"io/ioutil"
 	"log"
 	"net"
-	"net/http"
 	"regexp"
 )
 
@@ -30,17 +27,7 @@ func isIPValid(addr string) bool {
 }
 
 func getIP(url string, regexp *regexp.Regexp) string {
-	resp, err := http.Get(url)
-	if err != nil {
-		return ""
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return ""
-	}
-
+	body := getURL(url)
 	addr := regexp.FindAllStringSubmatch(string(body), -1)[0][1]
 	if !isIPValid(addr) {
 		addr = ""
