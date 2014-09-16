@@ -36,9 +36,13 @@ func getIP(url string, regexp *regexp.Regexp) string {
 	return addr
 }
 
-func getExternalIP() *externalIPAddress {
-	IPv4 := getIP("http://ipv4.internet.yandex.ru/", IPv4Regexp)
-	IPv6 := getIP("http://ipv6.internet.yandex.ru/", IPv6Regexp)
+func getExternalIP(conf *config) *externalIPAddress {
+	var IPv4, IPv6 string
+
+	IPv4 = getIP("http://ipv4.internet.yandex.ru/", IPv4Regexp)
+	if conf.SetIPv6 {
+		IPv6 = getIP("http://ipv6.internet.yandex.ru/", IPv6Regexp)
+	}
 
 	if IPv4 == "" && IPv6 == "" {
 		log.Fatal("Coudn't get neither IPv4 nor IPv6 addresses")

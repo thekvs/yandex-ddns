@@ -39,7 +39,7 @@ func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	verifyConfiguration(conf)
-	extIPAddr := getExternalIP()
+	extIPAddr := getExternalIP(conf)
 	domainInfo := getDomainInfo(conf)
 	updateDomainAddress(domainInfo, extIPAddr, conf)
 }

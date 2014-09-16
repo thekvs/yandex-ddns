@@ -13,6 +13,7 @@ type config struct {
 	SubDomain string  `json:"subdomain"`
 	LogFile   string  `json:"logfile"`
 	TTL       *uint64 `json:"ttl,omitempty"`
+	SetIPv6   bool    `json:"set-ipv6"`
 }
 
 const (
