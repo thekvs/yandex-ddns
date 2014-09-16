@@ -21,7 +21,7 @@ and this will build the binary in ```$GOPATH/bin```.
 * ```"subdomain"``` -- Subdomain of the registered domain, leave empty if you want to use main domain.
 * ```"ttl"``` -- TTL value for the DNS record which has to be in the range [900, 1209600], if omitted current default value is used.
 * ```"logfile"``` -- File where to write logs, if omitted messages will be printen on stderr or stdout.
-* ```"set-ipv6"``` -- ```true``` or ```false```, also try to set IPv6 address (though I don't know why would anyone need to use dynamic DNS with IPv6). Default value is ```false```.
+* ```"set-ipv6"``` -- If set to ```true``` also set IPv6 address (though I don't know why would anyone need to use dynamic DNS with IPv6). Default value is ```false```.
 
 ### Usage
 To update your IP every 15 minutes install in you ```cron``` something like this:
