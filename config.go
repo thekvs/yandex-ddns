@@ -21,10 +21,31 @@ const (
 	maxTTLValue = 1209600
 )
 
+const allowedPermissions = 0600
+
+func isPermissionsOk(f *os.File) bool {
+	finfo, err := f.Stat()
+	if err != nil {
+		log.Fatalf("error: %v\n", err)
+	}
+
+	permissions := finfo.Mode().Perm()
+	if permissions == allowedPermissions {
+		return true
+	}
+
+	return false
+}
+
 func newConfigurationFromFile(path string) *config {
 	file, err := os.Open(path)
 	if err != nil {
 		log.Fatalf("can't open configuration file: %v\n", err)
+	}
+	defer file.Close()
+
+	if !isPermissionsOk(file) {
+		log.Fatalf("error: configuration file with sensitive information has insecure permissions\n")
 	}
 
 	conf := newConfiguration(file)
