@@ -28,6 +28,9 @@ func getURL(url string) []byte {
 	if err != nil {
 		log.Fatalf("error: '%v'\n", err)
 	}
+	if resp.StatusCode != 200 {
+		log.Fatalf("error: unexpecetd HTTP status code: %d\n", resp.StatusCode)
+	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
