@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 const (
@@ -11,7 +12,9 @@ const (
 	defaultUserAgent = "Mozilla/4.0 (compatible; MSIE 7.0; +https://github.com/thekvs/yandex-ddns)"
 )
 
-var client = &http.Client{}
+const defaultNetworkTimeout = 20 * time.Second
+
+var client = &http.Client{Timeout: defaultNetworkTimeout}
 
 func getURL(url string) []byte {
 	req, err := http.NewRequest("GET", url, nil)
