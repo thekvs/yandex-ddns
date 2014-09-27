@@ -28,9 +28,14 @@ func isIPValid(addr string) bool {
 
 func getIP(url string, regexp *regexp.Regexp) string {
 	body := getURL(url)
-	addr := regexp.FindAllStringSubmatch(string(body), -1)[0][1]
-	if !isIPValid(addr) {
-		addr = ""
+	result := regexp.FindAllStringSubmatch(string(body), -1)
+
+	var addr string
+	if len(result) > 0 && len(result[0]) > 0 {
+		addr = result[0][1]
+		if !isIPValid(addr) {
+			addr = ""
+		}
 	}
 
 	return addr
@@ -45,7 +50,7 @@ func getExternalIP(conf *config) *externalIPAddress {
 	}
 
 	if IPv4 == "" && IPv6 == "" {
-		log.Fatal("Coudn't get neither IPv4 nor IPv6 addresses")
+		log.Fatal("couldn't determine external address")
 	}
 
 	return &externalIPAddress{v4: IPv4, v6: IPv6}
