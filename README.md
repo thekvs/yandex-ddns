@@ -16,7 +16,7 @@ and this will build the binary in ```$GOPATH/bin```.
 ### Configuration file options
 ```yandex-ddns``` uses JSON format for configuration file. Below is a list of supported configuration options.
 
-* ```"token"``` -- Yandex DNS API token. Thi is a mandatory option.
+* ```"token"``` -- Yandex DNS API token. This is a mandatory option.
 * ```"domain"``` -- Main domain registered at Yandex DNS. This is a mandatory option.
 * ```"subdomain"``` -- Subdomain of the registered domain, leave empty if you want to use main domain.
 * ```"ttl"``` -- TTL value for the DNS record which has to be in the range [900, 1209600], if omitted current default value is used.
