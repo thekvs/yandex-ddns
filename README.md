@@ -7,7 +7,8 @@ Domain you want to use with this utility has to be managed by Yandex DNS service
 [Here is some instructions in Russian](https://help.yandex.ru/pdd/hosting.xml).
 
 ### Installing
-This project is written in the [Go](http://golang.org/) programming language and to build it you need to install Go compiler and set some enviroment variables. [Here is an instructions on how to do it](http://golang.org/doc/install). After you've done it, run the following command in your shell:
+[![Build Status](https://travis-ci.org/thekvs/yandex-ddns.svg?branch=master)](https://travis-ci.org/thekvs/yandex-ddns)
+This project is written in the [Go](http://golang.org/) programming language and to build it you need to install Go compiler version 1.3 or higher and set some enviroment variables. [Here is an instructions on how to do it](http://golang.org/doc/install). After you've done it, run the following command in your shell:
 ```
 $ go get github.com/thekvs/yandex-ddns
 ```
