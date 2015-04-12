@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"regexp"
+	"strings"
 )
 
 var IPv4Regexp = regexp.MustCompile("IPv4: (\\S+)")
@@ -27,15 +28,20 @@ func isIPValid(addr string) bool {
 }
 
 func getIP(url string, regexp *regexp.Regexp) string {
-	body := getURL(url)
-	result := regexp.FindAllStringSubmatch(string(body), -1)
-
 	var addr string
-	if len(result) > 0 && len(result[0]) > 0 {
-		addr = result[0][1]
-		if !isIPValid(addr) {
-			addr = ""
+	body := getURL(url)
+
+	if regexp != nil {
+		result := regexp.FindAllStringSubmatch(string(body), -1)
+		if len(result) > 0 && len(result[0]) > 0 {
+			addr = result[0][1]
 		}
+	} else {
+		addr = strings.Trim(string(body), " \r\n")
+	}
+
+	if !isIPValid(addr) {
+		addr = ""
 	}
 
 	return addr
@@ -44,11 +50,11 @@ func getIP(url string, regexp *regexp.Regexp) string {
 func getExternalIP(conf *config) *externalIPAddress {
 	var IPv4, IPv6 string
 
-	IPv4 = getIP("https://ipv4.internet.yandex.ru/", IPv4Regexp)
-	if conf.SetIPv6 {
-		IPv6 = getIP("https://ipv6.internet.yandex.ru/", IPv6Regexp)
-	}
-
+	// IPv4 = getIP("https://ipv4.internet.yandex.ru/", IPv4Regexp)
+	// if conf.SetIPv6 {
+	// 	IPv6 = getIP("https://ipv6.internet.yandex.ru/", IPv6Regexp)
+	// }
+	IPv4 = getIP("http://myexternalip.com/raw", nil)
 	if IPv4 == "" && IPv6 == "" {
 		log.Fatal("couldn't determine external address")
 	}
