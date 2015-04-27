@@ -7,8 +7,7 @@ import (
 	"strings"
 )
 
-var IPv4Regexp = regexp.MustCompile("IPv4: (\\S+)")
-var IPv6Regexp = regexp.MustCompile("IPv6: (\\S+)")
+var IPv6Regexp = regexp.MustCompile("\\[(\\S+)\\]")
 
 type externalIPAddress struct {
 	v4 string
@@ -50,11 +49,11 @@ func getIP(url string, regexp *regexp.Regexp) string {
 func getExternalIP(conf *config) *externalIPAddress {
 	var IPv4, IPv6 string
 
-	// IPv4 = getIP("https://ipv4.internet.yandex.ru/", IPv4Regexp)
-	// if conf.SetIPv6 {
-	// 	IPv6 = getIP("https://ipv6.internet.yandex.ru/", IPv6Regexp)
-	// }
-	IPv4 = getIP("http://myexternalip.com/raw", nil)
+	IPv4 = getIP("http://ipv4.myexternalip.com/raw", nil)
+	if conf.SetIPv6 {
+		IPv6 = getIP("http://ipv6.myexternalip.com/raw", IPv6Regexp)
+	}
+
 	if IPv4 == "" && IPv6 == "" {
 		log.Fatal("couldn't determine external address")
 	}
