@@ -1,6 +1,6 @@
 ## Use Yandex DNS as a dynamic DNS service
 
-This utility uses Yandex DNS API to set external IP address for your domain. You can use this tool to manage external IP for your domain if it has internet connection with changeable IP address. This utility uses [internet.yandex.ru](http://internet.yandex.ru/) to determine your external IP.
+This utility uses Yandex DNS API to set external IP address for your domain. You can use this tool to manage external IP for your domain if it has internet connection with changeable IP address. To determine your external IP address utility uses [myexternalip.com](http://myexternalip.com/) service.
 
 ### Requirements
 Domain you want to use with this utility has to be managed by Yandex DNS service.
