@@ -25,7 +25,7 @@ and this will build the binary in ```$GOPATH/bin```.
 * ```"logfile"``` -- File where to write logs, if omitted messages will be printen on stderr or stdout.
 * ```"set-ipv6"``` -- If set to ```true``` also set IPv6 address (though I don't know why would anyone need to use dynamic DNS with IPv6). Default value is ```false```.
 
-Sinse configuration file contains sensetive information (authorization token) it has to have ```0600``` (aka ```-rw-------```) permissions.
+Since configuration file contains sensetive information (authorization token) it has to have ```0600``` (aka ```-rw-------```) permissions.
 
 ### Usage
 To update your IP every 15 minutes install in you ```cron``` something like this:
