@@ -1,19 +1,20 @@
 package main
 
 import (
-	"encoding/json"
 	"io"
 	"log"
 	"os"
+
+	"github.com/BurntSushi/toml"
 )
 
 type config struct {
-	Token     string  `json:"token"`
-	Domain    string  `json:"domain"`
-	SubDomain string  `json:"subdomain"`
-	LogFile   string  `json:"logfile"`
-	TTL       *uint64 `json:"ttl,omitempty"`
-	SetIPv6   bool    `json:"set-ipv6"`
+	Token     string  `toml:"token"`
+	Domain    string  `toml:"domain"`
+	SubDomain string  `toml:"subdomain"`
+	LogFile   string  `toml:"logfile"`
+	TTL       *uint64 `toml:"ttl,omitempty"`
+	SetIPv6   bool    `toml:"set-ipv6"`
 }
 
 const (
@@ -70,9 +71,10 @@ func verifyConfiguration(conf *config) {
 }
 
 func newConfiguration(data io.Reader) *config {
-	decoder := json.NewDecoder(data)
-	conf := &config{}
-	decoder.Decode(&conf)
+	var conf config
+	if _, err := toml.DecodeReader(data, &conf); err != nil {
+		log.Fatalf("Couldn't parse configuration file: %v", err)
+	}
 
-	return conf
+	return &conf
 }

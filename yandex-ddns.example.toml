@@ -1,0 +1,5 @@
+token="uiwkdshjfgkdsgkjghf"
+domain="example.com"
+subdomain="test"
+logfile="/tmp/yandex-ddns.log"
+ttl=900
