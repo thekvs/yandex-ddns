@@ -13,7 +13,7 @@ func main() {
 		testConfigOnly bool
 	)
 
-	flag.StringVar(&configFile, "config", "yandex-ddns.json", "configuration file")
+	flag.StringVar(&configFile, "config", "yandex-ddns.toml", "configuration file")
 	flag.BoolVar(&testConfigOnly, "t", false, "only test configuration file")
 
 	flag.Parse()
