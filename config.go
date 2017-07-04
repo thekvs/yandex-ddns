@@ -14,7 +14,7 @@ type config struct {
 	SubDomain string  `toml:"subdomain"`
 	LogFile   string  `toml:"logfile"`
 	TTL       *uint64 `toml:"ttl,omitempty"`
-	SetIPv6   bool    `toml:"set-ipv6"`
+	SetIPv6   bool    `toml:"set_ipv6"`
 }
 
 const (
