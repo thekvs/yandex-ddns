@@ -46,7 +46,7 @@ func getDomainInfo(conf *config) *domainInfo {
 	if err != nil {
 		log.Fatalf("request to the Yandex DNS API service failed: %v\n", err)
 	}
-	defer resp.Body.Close()
+	defer closeResource(resp.Body)
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

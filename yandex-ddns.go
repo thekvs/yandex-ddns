@@ -31,7 +31,7 @@ func main() {
 		if err != nil {
 			log.Fatalf("error opening file: %v", err)
 		}
-		defer f.Close()
+		defer closeResource(f)
 
 		log.SetOutput(f)
 	}

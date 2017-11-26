@@ -31,7 +31,7 @@ func getURL(url string) []byte {
 	if resp.StatusCode != 200 {
 		log.Fatalf("error: unexpecetd HTTP status code: %d\n", resp.StatusCode)
 	}
-	defer resp.Body.Close()
+	defer closeResource(resp.Body)
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

@@ -43,7 +43,7 @@ func newConfigurationFromFile(path string) *config {
 	if err != nil {
 		log.Fatalf("can't open configuration file: %v\n", err)
 	}
-	defer file.Close()
+	defer closeResource(file)
 
 	if !isPermissionsOk(file) {
 		log.Fatalf("error: configuration file with sensitive information has insecure permissions\n")
