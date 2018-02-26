@@ -5,7 +5,24 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
+
+	"github.com/nightlyone/lockfile"
 )
+
+func initLock(file string) (*lockfile.Lockfile, error) {
+	lock, err := lockfile.New(filepath.Join(os.TempDir(), file))
+	if err != nil {
+		return nil, err
+	}
+
+	err = lock.TryLock()
+	if err != nil {
+		return nil, err
+	}
+
+	return &lock, nil
+}
 
 func main() {
 	var (
@@ -25,6 +42,12 @@ func main() {
 		fmt.Println("Configuration file Ok.")
 		os.Exit(0)
 	}
+
+	lock, err := initLock("yandex-ddns.lock")
+	if err != nil {
+		log.Fatalf("Couldn't init lock file: %v\n", err)
+	}
+	defer lock.Unlock()
 
 	if conf.LogFile != "" {
 		f, err := os.OpenFile(conf.LogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
