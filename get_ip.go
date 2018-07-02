@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var IPv6Regexp = regexp.MustCompile("\\[(\\S+)\\]")
+var IPv6Regexp = regexp.MustCompile(`\[(\S+)\]`)
 
 type externalIPAddress struct {
 	v4 string
@@ -17,10 +17,7 @@ type externalIPAddress struct {
 func isIPValid(addr string) bool {
 	if addr != "" {
 		ip := net.ParseIP(addr)
-		if ip == nil {
-			return false
-		}
-		return true
+		return !(ip == nil)
 	}
 
 	return false

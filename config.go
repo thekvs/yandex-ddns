@@ -31,11 +31,8 @@ func isPermissionsOk(f *os.File) bool {
 	}
 
 	permissions := finfo.Mode().Perm()
-	if permissions == allowedPermissions {
-		return true
-	}
 
-	return false
+	return permissions == allowedPermissions
 }
 
 func newConfigurationFromFile(path string) *config {
