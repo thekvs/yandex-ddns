@@ -48,7 +48,7 @@ func getExternalIP(conf *config) *externalIPAddress {
 
 	IPv4 = getIP("http://ipv4.myexternalip.com/raw", nil)
 	if conf.SetIPv6 {
-		IPv6 = getIP("http://ipv6.myexternalip.com/raw", IPv6Regexp)
+		IPv6 = getIP("http://ipv6.myexternalip.com/raw", nil)
 	}
 
 	if IPv4 == "" && IPv6 == "" {
