@@ -50,10 +50,13 @@ func updateDomainAddress(info *domainInfo, extIPAddr *externalIPAddress, conf *c
 	)
 
 	update := func() {
-		body := getURL(url)
-		verifyUpdateRecordResponse(body)
-
-		log.Printf("IP address for '%s' set to %s\n", getFullDomainName(subDomain, conf.Domain), addr)
+		body, err := getURL(url)
+		if err != nil {
+			log.Printf("%s", err.Error())
+		} else {
+			verifyUpdateRecordResponse(body)
+			log.Printf("IP address for '%s' set to %s\n", getFullDomainName(subDomain, conf.Domain), addr)
+		}
 	}
 
 	var ttl uint64

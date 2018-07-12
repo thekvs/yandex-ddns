@@ -1,8 +1,8 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"time"
 )
@@ -16,27 +16,28 @@ const defaultNetworkTimeout = 20 * time.Second
 
 var client = &http.Client{Timeout: defaultNetworkTimeout}
 
-func getURL(url string) []byte {
+func getURL(url string) ([]byte, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		log.Fatalf("error: '%v'\n", err)
+		return nil, err
 	}
 
 	req.Header.Add(userAgentHeader, defaultUserAgent)
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Fatalf("error: '%v'\n", err)
-	}
-	if resp.StatusCode != 200 {
-		log.Fatalf("error: unexpecetd HTTP status code: %d\n", resp.StatusCode)
+		return nil, err
 	}
 	defer closeResource(resp.Body)
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatalf("error: '%v'\n", err)
+	if resp.StatusCode != 200 {
+		return nil, fmt.Errorf("unexpecetd HTTP status code: %d", resp.StatusCode)
 	}
 
-	return body
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return body, nil
 }
