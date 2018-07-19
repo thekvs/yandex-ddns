@@ -61,7 +61,7 @@ func getDomainInfo(conf *config) *domainInfo {
 
 func verifyDomainInfoData(info *domainInfo, conf *config) {
 	if info.Delegated == nil {
-		log.Fatalf("domain is not delegated\n")
+		log.Fatalf("domain '%s' is not delegated\n", info.Name)
 	}
 
 	if info.Error != "ok" {

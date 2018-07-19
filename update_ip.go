@@ -22,11 +22,11 @@ func verifyUpdateRecordResponse(data []byte) {
 
 	err := xml.Unmarshal(data, resp)
 	if err != nil {
-		log.Fatalf("failed to parse response from Yandex DNS API service %v\n", err)
+		log.Fatalf("failed to parse response from Yandex DNS API service: %s\n", err.Error())
 	}
 
 	if resp.Error != "ok" {
-		log.Fatalf("update failed, error message: %v\n", resp.Error)
+		log.Fatalf("update failed: %s\n", resp.Error)
 	}
 }
 
