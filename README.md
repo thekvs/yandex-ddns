@@ -9,7 +9,7 @@ Domain you want to use with this utility has to be managed by Yandex DNS service
 ### Installing
 [![Build Status](https://travis-ci.org/thekvs/yandex-ddns.svg?branch=master)](https://travis-ci.org/thekvs/yandex-ddns)
 
-This project is written in the [Go](http://golang.org/) programming language and to build it you need to install Go compiler version 1.3 or higher and set some enviroment variables. [Here is an instructions on how to do it](http://golang.org/doc/install). After you've done it, run the following command in your shell:
+This project is written in the [Go](http://golang.org/) programming language and to build it you need to install Go compiler version 1.3 or higher and set some environment variables. [Here is an instructions on how to do it](http://golang.org/doc/install). After you've done it, run the following command in your shell:
 ```
 $ go get github.com/thekvs/yandex-ddns
 ```
@@ -25,7 +25,7 @@ and this will build the binary in `$GOPATH/bin`.
 * `logfile` -- File where to write logs, if omitted messages will be printen on stderr or stdout.
 * `set_ipv6` -- If set to `true` also set IPv6 address (though I don't know why would anyone need to use dynamic DNS with IPv6). Default value is `false`.
 
-Since configuration file contains sensetive information (authorization token) it has to have ```0600``` (aka ```-rw-------```) permissions.
+Since configuration file contains sensitive information (authorization token) it has to have ```0600``` (aka ```-rw-------```) permissions.
 
 ### Usage
 To update your IP every 15 minutes install in you `cron` something like this:
