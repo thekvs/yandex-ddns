@@ -4,7 +4,7 @@ This utility uses Yandex DNS API to set external IP address for your domain. You
 
 ### Requirements
 Domain you want to use with this utility has to be managed by Yandex DNS service.
-[Here is some instructions in Russian](https://help.yandex.ru/pdd/hosting.xml).
+[Here is some instructions in Russian](https://tech.yandex.ru/pdd/doc/about-docpage/).
 
 ### Installing
 [![Build Status](https://travis-ci.org/thekvs/yandex-ddns.svg?branch=master)](https://travis-ci.org/thekvs/yandex-ddns)
