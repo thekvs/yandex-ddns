@@ -1,31 +1,43 @@
 package main
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"fmt"
 	"log"
-	"strconv"
+	"net/url"
 )
 
 const (
-	editARecordURLTemplate    = "https://pddimp.yandex.ru/nsapi/edit_a_record.xml?token=%s&domain=%s&subdomain=%s&record_id=%s&ttl=%d&content=%s"
-	editAAAARecordURLTemplate = "https://pddimp.yandex.ru/nsapi/edit_aaaa_record.xml?token=%s&domain=%s&subdomain=%s&record_id=%s&ttl=%d&content=%s"
+	editRecordURL = "https://pddimp.yandex.ru/api2/admin/dns/edit"
 )
 
-type updateRecordResponse struct {
-	Name  string `xml:"domains>domain>name"`
-	Error string `xml:"domains>error"`
+type updateDomainResponse struct {
+	Domain   string `json:"domain"`
+	RecordID uint64 `json:"record_id"`
+	Record   struct {
+		RecordID  uint64      `json:"record_id"`
+		Type      string      `json:"type"`
+		Domain    string      `json:"domain"`
+		Fqdn      string      `json:"fqdn"`
+		TTL       uint64      `json:"ttl"`
+		Subdomain string      `json:"subdomain"`
+		Content   string      `json:"content"`
+		Priority  interface{} `json:"priority"`
+		Operation string      `json:"operation"`
+	} `json:"record"`
+	Success string `json:"success"`
+	Error   string `json:"error"`
 }
 
 func verifyUpdateRecordResponse(data []byte) {
-	resp := &updateRecordResponse{}
+	resp := &updateDomainResponse{}
 
-	err := xml.Unmarshal(data, resp)
+	err := json.Unmarshal(data, resp)
 	if err != nil {
 		log.Fatalf("failed to parse response from Yandex DNS API service: %s\n", err.Error())
 	}
 
-	if resp.Error != "ok" {
+	if resp.Success != "ok" {
 		log.Fatalf("update failed: %s\n", resp.Error)
 	}
 }
@@ -38,60 +50,62 @@ func getFullDomainName(subdomain string, domain string) string {
 	return fmt.Sprintf("%s.%s", subdomain, domain)
 }
 
+func update(token string, params *url.Values) bool {
+	resp, err := postURL(editRecordURL, &token, params)
+	if err != nil {
+		log.Fatalf("%s", err.Error())
+	} else {
+		verifyUpdateRecordResponse(resp)
+	}
+
+	return true
+}
+
 func updateDomainAddress(info *domainInfo, extIPAddr *externalIPAddress, conf *config) {
-	subDomain := conf.SubDomain
-	if conf.SubDomain == "" {
-		subDomain = "@"
+	subdomain := conf.SubDomain
+	if len(conf.SubDomain) == 0 {
+		subdomain = "@"
 	}
 
 	var (
-		url  string
+		ttl  string
 		addr string
 	)
 
-	update := func() {
-		body, err := getURL(url)
-		if err != nil {
-			log.Printf("%s", err.Error())
-		} else {
-			verifyUpdateRecordResponse(body)
-			log.Printf("IP address for '%s' set to %s\n", getFullDomainName(subDomain, conf.Domain), addr)
-		}
-	}
-
-	var ttl uint64
-
 	updated := false
+
 	for _, record := range info.Records {
-		if record.SubDomain != subDomain {
+		if record.Subdomain != subdomain {
 			continue
 		}
 
 		if conf.TTL != nil && *conf.TTL > 0 {
-			ttl = *conf.TTL
+			ttl = fmt.Sprintf("%d", *conf.TTL)
 		} else {
-			var err error
-			ttl, err = strconv.ParseUint(record.TTL, 10, 0)
-			if err != nil {
-				log.Fatalf("failed to convert %s to uint: %v\n", record.TTL, err)
-			}
+			ttl = fmt.Sprintf("%d", record.TTL)
 		}
 
-		if record.Type == "A" && extIPAddr.v4 != "" {
+		if record.Type == "A" && len(extIPAddr.v4) > 0 {
 			addr = extIPAddr.v4
-			url = fmt.Sprintf(editARecordURLTemplate, conf.Token, conf.Domain, record.SubDomain, record.ID, ttl, addr)
-		} else if record.Type == "AAAA" && extIPAddr.v6 != "" {
+		} else if record.Type == "AAAA" && len(extIPAddr.v6) > 0 {
 			addr = extIPAddr.v6
-			url = fmt.Sprintf(editAAAARecordURLTemplate, conf.Token, conf.Domain, record.SubDomain, record.ID, ttl, addr)
 		} else {
 			continue
 		}
 
-		update()
-		updated = true
+		params := &url.Values{}
+
+		params.Set("domain", conf.Domain)
+		params.Set("record_id", fmt.Sprintf("%d", record.RecordID))
+		params.Set("ttl", ttl)
+		params.Set("content", addr)
+
+		updated = update(conf.Token, params)
+
+		log.Printf("IP address for '%s' set to '%s'\n", conf.Domain, addr)
 	}
 
 	if !updated {
-		log.Fatalf("domain '%s' not known for Yandex.DNS\n", getFullDomainName(subDomain, conf.Domain))
+		log.Fatalf("domain '%s' not known to Yandex.DNS\n", getFullDomainName(subdomain, conf.Domain))
 	}
 }

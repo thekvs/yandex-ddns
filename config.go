@@ -62,7 +62,8 @@ func verifyConfiguration(conf *config) {
 
 	if conf.TTL != nil {
 		if *conf.TTL < minTTLValue || *conf.TTL > maxTTLValue {
-			log.Fatalf("domain TTL value (=%d) exeeds permissible range (=[%d, %d])\n", *conf.TTL, minTTLValue, maxTTLValue)
+			log.Fatalf("domain TTL value (=%d) exeeds permissible range (=[%d, %d])\n",
+				*conf.TTL, minTTLValue, maxTTLValue)
 		}
 	}
 }

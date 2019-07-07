@@ -19,12 +19,11 @@ type externalIPAddress struct {
 
 var lookupExternalIPUrls = []lookupExternalIPUrl{
 	lookupExternalIPUrl{
-		v4: "http://ipv4.myexternalip.com/raw",
-		v6: "http://ipv6.myexternalip.com/raw",
-	},
-	lookupExternalIPUrl{
 		v4: "https://v4.ifconfig.co/ip",
 		v6: "https://v6.ifconfig.co/ip",
+	},
+	lookupExternalIPUrl{
+		v4: "http://myexternalip.com/raw",
 	},
 }
 
@@ -40,7 +39,7 @@ func isIPValid(addr string) bool {
 func getIP(url string, regexp *regexp.Regexp) (string, error) {
 	var addr string
 
-	body, err := getURL(url)
+	body, err := getURL(url, nil)
 	if err != nil {
 		return "", err
 	}
@@ -84,7 +83,7 @@ func getExternalIP(conf *config) *externalIPAddress {
 	}
 
 	if len(IPv4) == 0 && len(IPv6) == 0 {
-		log.Fatal("couldn't determine external address")
+		log.Fatal("couldn't determine external IP address")
 	}
 
 	return &externalIPAddress{v4: IPv4, v6: IPv6}
