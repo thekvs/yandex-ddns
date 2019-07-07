@@ -9,11 +9,7 @@ Domain you want to use with this utility has to be managed by Yandex DNS service
 ### Installing
 [![Build Status](https://travis-ci.org/thekvs/yandex-ddns.svg?branch=master)](https://travis-ci.org/thekvs/yandex-ddns)
 
-This project is written in the [Go](http://golang.org/) programming language and to build it you need to install Go compiler version 1.3 or higher and set some environment variables. [Here is an instructions on how to do it](http://golang.org/doc/install). After you've done it, run the following command in your shell:
-```
-$ go get github.com/thekvs/yandex-ddns
-```
-and this will build the binary in `$GOPATH/bin`.
+This project is written in the [Go](http://golang.org/) programming language and to build it you need to install Go compiler version 1.12 or higher. To compile project just run `make` in the root of the repository. Compiled binary will be located in the `bin` subfolder.
 
 ### Configuration file options
 `yandex-ddns` uses [TOML](https://github.com/toml-lang/toml) format for configuration file. Below is a list of supported configuration options.
