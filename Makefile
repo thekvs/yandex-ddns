@@ -5,7 +5,7 @@ MOUNT_POINT=/project
 .DEFAULT_GOAL := build
 
 build:
-	GOBIN=$(shell pwd)/bin go install -mod=vendor -a -ldflags '-w -s' -v ./...
+	GOBIN=$(shell pwd)/bin go install -mod=vendor -ldflags '-w -s' -v ./...
 
 clean:
 	rm -rf bin
