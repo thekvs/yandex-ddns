@@ -1,8 +1,4 @@
-github.com/BurntSushi/toml v0.0.0-20170626110600-a368813c5e64 h1:BuYewlQyh/jroxY8qx41SrzD8Go17GkyCyAeVmprvQI=
-github.com/BurntSushi/toml v0.0.0-20170626110600-a368813c5e64/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/nightlyone/lockfile v0.0.0-20170804114028-6a197d5ea611 h1:dJA8OtA0V3XJ3MvZKU8tOlrXenaGOypfPHSi2JWgBto=
-github.com/nightlyone/lockfile v0.0.0-20170804114028-6a197d5ea611/go.mod h1:JbxfV1Iifij2yhRjXai0oFrbpxszXHRx1E5RuM26o4Y=
-github.com/nightlyone/lockfile v0.0.0-20180618180623-0ad87eef1443 h1:+2OJrU8cmOstEoh0uQvYemRGVH1O6xtO2oANUWHFnP0=
-github.com/nightlyone/lockfile v0.0.0-20180618180623-0ad87eef1443/go.mod h1:JbxfV1Iifij2yhRjXai0oFrbpxszXHRx1E5RuM26o4Y=
+github.com/nightlyone/lockfile v1.0.0 h1:RHep2cFKK4PonZJDdEl4GmkabuhbsRMgk/k3uAmxBiA=
+github.com/nightlyone/lockfile v1.0.0/go.mod h1:rywoIealpdNse2r832aiD9jRk8ErCatROs6LzC841CI=

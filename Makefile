@@ -1,4 +1,3 @@
-GOLANG_VERSION=1.12.6
 MOUNT_POINT=/project
 
 .PHONY: build clean lint
