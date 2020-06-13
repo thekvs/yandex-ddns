@@ -22,7 +22,7 @@ const (
 	maxTTLValue = 1209600
 )
 
-const allowedPermissions = 0600
+const allowedPermissions = 0o600
 
 func isPermissionsOk(f *os.File) bool {
 	finfo, err := f.Stat()

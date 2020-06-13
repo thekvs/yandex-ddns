@@ -50,7 +50,7 @@ func main() {
 	defer lock.Unlock()
 
 	if conf.LogFile != "" {
-		f, err := os.OpenFile(conf.LogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+		f, err := os.OpenFile(conf.LogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0o666)
 		if err != nil {
 			log.Fatalf("error opening file: %v", err)
 		}

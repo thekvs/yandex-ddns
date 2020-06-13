@@ -18,11 +18,11 @@ type externalIPAddress struct {
 }
 
 var lookupExternalIPUrls = []lookupExternalIPUrl{
-	lookupExternalIPUrl{
+	{
 		v4: "https://v4.ifconfig.co/ip",
 		v6: "https://v6.ifconfig.co/ip",
 	},
-	lookupExternalIPUrl{
+	{
 		v4: "http://myexternalip.com/raw",
 	},
 }

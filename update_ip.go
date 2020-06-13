@@ -42,7 +42,7 @@ func verifyUpdateRecordResponse(data []byte) {
 	}
 }
 
-func getFullDomainName(subdomain string, domain string) string {
+func getFullDomainName(subdomain, domain string) string {
 	if subdomain == "@" {
 		return domain
 	}
